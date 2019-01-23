@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using ProxyLayer.Formatters;
+using ProxyLayer.Middlewares;
 
 namespace ProxyLayer
 {
@@ -17,15 +19,19 @@ namespace ProxyLayer
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public static IConfiguration Configuration => _configuration;
+        private static IConfiguration _configuration;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options =>
+            {
+                options.OutputFormatters.Add(new OctetOutputFormatter());
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,12 +41,40 @@ namespace ProxyLayer
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
+
+            if (Program.UseSSL)
             {
-                app.UseHsts();
+                // Redirect to Https
+                app.UseHttpsRedirection();
             }
 
-            app.UseHttpsRedirection();
+            // Add Console Logging
+            app.UseRequestLogger();
+
+            // Add Request Filter
+            app.UseRequestFilter(Configuration);
+
+            // Configure all mappings from appsettings.json
+            int count = 0;
+            while (!String.IsNullOrEmpty(Configuration["Mappings:" + count + ":Pattern"]))
+            {
+                // Read Mapping values
+                string pattern = Configuration["Mappings:" + count + ":Pattern"];
+                int port = Convert.ToInt32(Configuration["Mappings:" + count + ":Port"]);
+
+                // Create Mapping
+                Mapping mapping = new Mapping(pattern, port);
+
+                // Configure Mapping
+                app.MapWhen(mapping.IsConfiguredPath, builder => builder.RunProxy(mapping.ProxyOptions));
+
+                // For Console Logging
+                Console.WriteLine("Mapped " + pattern + " to " + port);
+
+                // Goto Next Mapping
+                count++;
+            }
+                        
             app.UseMvc();
         }
     }

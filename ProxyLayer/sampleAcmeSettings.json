@@ -1,0 +1,16 @@
+{
+  "AcmeHttpResponse": {
+    "Enabled": "true",
+    "Count": "2",
+    "Challenges": [
+      {
+        "Path": "Insert_Path_Here",
+        "Value": "Insert_Key_Here"
+      },
+      {
+        "Path": "Insert_Path_Here",
+        "Value": "Insert_Key_Here"
+      }
+    ]
+  }
+}
