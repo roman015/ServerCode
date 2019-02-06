@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 
 namespace ProxyLayer.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class DefaultController : ControllerBase
     {
