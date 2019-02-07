@@ -8,10 +8,16 @@ using Newtonsoft.Json;
 
 namespace DeployManager.Controllers
 {
-    [Route("build")]
+    [Route("Build")]
     [ApiController]
     public class BuildController : ControllerBase
     {
+        [HttpGet("test")]
+        public ActionResult Test()
+        {
+            return Ok("It Works!");
+        }
+
         [HttpPost]
         public ActionResult ProcessWebHook()
         {
@@ -58,7 +64,7 @@ namespace DeployManager.Controllers
             return Ok();
         }
 
-        // GET api/values        
+        // Handle Push Request     
         public ActionResult OnPushHandler([FromBody]PushPayload payload)
         {
             Console.WriteLine("New Push Detected");
