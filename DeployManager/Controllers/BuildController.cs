@@ -21,27 +21,34 @@ namespace DeployManager.Controllers
         [HttpPost]
         public ActionResult ProcessWebHook()
         {
-            // Process only valid requests
-            if(!HttpContext.Request.Headers.Keys.Contains("X-GitHub-Event"))
+            try
             {
-                return StatusCode(StatusCodes.Status400BadRequest);
+                // Process only valid requests
+                if (!HttpContext.Request.Headers.Keys.Contains("X-GitHub-Event"))
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest);
+                }
+
+                string requestBodyJson = new System.IO.StreamReader(HttpContext.Request.Body).ReadToEnd();
+
+                // Process Github Request
+                switch (HttpContext.Request.Headers["X-GitHub-Event"])
+                {
+                    case "ping":
+                        PingPayload pingPayload = JsonConvert.DeserializeObject<PingPayload>(requestBodyJson);
+                        return OnPingHandler(pingPayload);
+                    case "push":
+                        PushPayload pushPayload = JsonConvert.DeserializeObject<PushPayload>(requestBodyJson);
+                        return OnPushHandler(pushPayload);
+                    default:
+                        Console.WriteLine("Invalid github event"
+                            + HttpContext.Request.Headers["X-GitHub-Event"]);
+                        return StatusCode(StatusCodes.Status501NotImplemented);
+                }
             }
-
-            string requestBodyJson = new System.IO.StreamReader(HttpContext.Request.Body).ReadToEnd();
-
-            // Process Github Request
-            switch (HttpContext.Request.Headers["X-GitHub-Event"])
+            catch(Exception ex)
             {
-                case "ping":
-                    PingPayload pingPayload = JsonConvert.DeserializeObject<PingPayload>(requestBodyJson);
-                    return OnPingHandler(pingPayload);
-                case "push":
-                    PushPayload pushPayload = JsonConvert.DeserializeObject<PushPayload>(requestBodyJson);
-                    return OnPushHandler(pushPayload);
-                default:
-                    Console.WriteLine("Invalid github event"
-                        + HttpContext.Request.Headers["X-GitHub-Event"]);
-                    return StatusCode(StatusCodes.Status501NotImplemented);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
