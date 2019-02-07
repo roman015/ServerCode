@@ -51,7 +51,7 @@ namespace ProxyLayer
                 {
                     options.Listen(IPAddress.Any, port);
 
-                    if (certPath != null)
+                    if (!string.IsNullOrWhiteSpace(certPath))
                     {
                         UseSSL = true;
                         options.Listen(IPAddress.Any, sslPort, listenOptions =>

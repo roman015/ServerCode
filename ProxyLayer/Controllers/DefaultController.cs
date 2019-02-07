@@ -14,9 +14,10 @@ namespace ProxyLayer.Controllers
         private readonly IConfiguration ACMEConfiguration;
         public DefaultController()
         {
+            Console.WriteLine("Opening ACME File in : " + Startup.Configuration["AcmeSettingsLocation"].ToString());
             this.ACMEConfiguration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile(path: Startup.Configuration["AcmeSettingsLocation"], optional: true, reloadOnChange: true)
+                .AddJsonFile(path: Startup.Configuration["AcmeSettingsLocation"].ToString(), optional: true, reloadOnChange: true)
                 .Build();
         }
 
