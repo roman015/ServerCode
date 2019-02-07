@@ -1,4 +1,6 @@
-﻿namespace DeployManager.Controllers
+﻿using System;
+
+namespace DeployManager.Controllers
 {
     public class PingPayload
     {
@@ -23,5 +25,6 @@
         public string full_name { get; set; }
         public string html_url{ get; set; }
         public string ssh_url { get; set; }
+        public DateTime updated_at { get; set; }
     }
 }

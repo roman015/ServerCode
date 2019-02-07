@@ -15,7 +15,7 @@ namespace DeployManager.Controllers
         [HttpGet("test")]
         public ActionResult Test()
         {
-            return Ok("It Works!");
+            return Ok("Message From " + HttpContext.Request.Host.Host);
         }
 
         [HttpPost]
@@ -23,6 +23,8 @@ namespace DeployManager.Controllers
         {
             try
             {
+                Console.WriteLine("Message From " + HttpContext.Request.Host.Host);
+
                 // Process only valid requests
                 if (!HttpContext.Request.Headers.Keys.Contains("X-GitHub-Event"))
                 {
