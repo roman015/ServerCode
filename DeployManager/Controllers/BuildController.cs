@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace DeployManager.Controllers
 {
@@ -11,9 +12,35 @@ namespace DeployManager.Controllers
     [ApiController]
     public class BuildController : ControllerBase
     {
-        // Ping to check if configured properly
-        [HttpPost("notify/ping")]
-        public ActionResult OnPingHandler([FromBody]PingPayload payload)
+        [HttpPost]
+        public ActionResult ProcessWebHook()
+        {
+            // Process only valid requests
+            if(!HttpContext.Request.Headers.Keys.Contains("X-GitHub-Event"))
+            {
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+
+            string requestBodyJson = new System.IO.StreamReader(HttpContext.Request.Body).ReadToEnd();
+
+            // Process Github Request
+            switch (HttpContext.Request.Headers["X-GitHub-Event"])
+            {
+                case "ping":
+                    PingPayload pingPayload = JsonConvert.DeserializeObject<PingPayload>(requestBodyJson);
+                    return OnPingHandler(pingPayload);
+                case "push":
+                    PushPayload pushPayload = JsonConvert.DeserializeObject<PushPayload>(requestBodyJson);
+                    return OnPushHandler(pushPayload);
+                default:
+                    Console.WriteLine("Invalid github event"
+                        + HttpContext.Request.Headers["X-GitHub-Event"]);
+                    return StatusCode(StatusCodes.Status501NotImplemented);
+            }
+        }
+
+        // Ping to check if configured properly        
+        public ActionResult OnPingHandler(PingPayload payload)
         {
             if(payload == null)
             {
@@ -31,8 +58,7 @@ namespace DeployManager.Controllers
             return Ok();
         }
 
-        // GET api/values
-        [HttpPost("notify/push")]
+        // GET api/values        
         public ActionResult OnPushHandler([FromBody]PushPayload payload)
         {
             Console.WriteLine("New Push Detected");
