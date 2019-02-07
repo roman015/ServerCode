@@ -65,7 +65,7 @@ namespace DeployManager.Controllers
             Console.WriteLine(DateTime.Today.ToString("MM/dd/yy H:mm:ss zzz") + " : Payload received {" +
                 "zen : " + payload.zen +
                 "hook_id" + payload.hook_id +
-                "hook" + payload.hook +
+                "repository.full_name" + payload.repository.full_name +
                 "}");
 
             return Ok();
