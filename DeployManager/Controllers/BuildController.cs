@@ -62,10 +62,10 @@ namespace DeployManager.Controllers
                 return StatusCode(StatusCodes.Status204NoContent);
             }
 
-            Console.WriteLine(DateTime.Today.ToString("MM/dd/yy H:mm:ss zzz") + " : Payload received {" +
-                "zen : " + payload.zen +
-                "hook_id" + payload.hook_id +
-                "repository.full_name" + payload.repository.full_name +
+            Console.WriteLine(DateTime.Now.ToString("MM/dd/yy H:mm:ss zzz") + " : Payload received {" + Environment.NewLine +
+                "zen : " + payload.zen + Environment.NewLine +
+                "hook_id" + payload.hook_id + Environment.NewLine +
+                "repository.full_name" + payload.repository.full_name + Environment.NewLine +
                 "}");
 
             return Ok();
