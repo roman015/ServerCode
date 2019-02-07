@@ -21,6 +21,12 @@ namespace ProxyLayer.Controllers
                 .Build();
         }
 
+        [HttpGet("test")]
+        public IActionResult TestServer()
+        {            
+            return Ok("It Works!");
+        }
+
         [HttpGet("robots.txt")]
         public IActionResult GetRobotsSettings()
         {
