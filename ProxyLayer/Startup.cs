@@ -33,6 +33,10 @@ namespace ProxyLayer
                 options.OutputFormatters.Add(new OctetOutputFormatter());
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            if(Configuration == null)
+            {
+                Console.WriteLine("No CONFIG Detected!");
+            }
             services.AddSingleton<IConfiguration>(Configuration);
         }
 

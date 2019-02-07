@@ -14,10 +14,10 @@ namespace ProxyLayer.Controllers
         private readonly IConfiguration ACMEConfiguration;
         public DefaultController(IConfiguration configuration)
         {
-            Console.WriteLine("Opening ACME File in : " + configuration["AcmeSettingsLocation"].ToString());
-
             if (configuration != null && configuration["AcmeSettingsLocation"] != null)
             {
+                Console.WriteLine("Opening ACME File in : " + configuration["AcmeSettingsLocation"].ToString());
+
                 this.ACMEConfiguration = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile(path: configuration["AcmeSettingsLocation"].ToString(), optional: true, reloadOnChange: true)
@@ -27,7 +27,7 @@ namespace ProxyLayer.Controllers
 
         [HttpGet("test")]
         public IActionResult TestServer()
-        {            
+        {
             return Ok("It Works!");
         }
 
