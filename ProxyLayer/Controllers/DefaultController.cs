@@ -14,21 +14,15 @@ namespace ProxyLayer.Controllers
         private readonly IConfiguration ACMEConfiguration;
         public DefaultController(IConfiguration configuration)
         {
-            if (configuration != null && configuration["AcmeSettingsLocation"] != null)
-            {
-                Console.WriteLine("Opening ACME File in : " + configuration["AcmeSettingsLocation"].ToString());
+            Console.WriteLine("Opening ACME File in : " +  configuration?.GetValue<string>("AcmeSettingsLocation"));
 
+            if (!String.IsNullOrWhiteSpace(configuration?.GetValue<string>("AcmeSettingsLocation")))
+            {
                 this.ACMEConfiguration = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile(path: configuration["AcmeSettingsLocation"].ToString(), optional: true, reloadOnChange: true)
+                    .AddJsonFile(path: configuration?.GetValue<string>("AcmeSettingsLocation"), optional: true, reloadOnChange: true)
                     .Build();
             }
-        }
-
-        [HttpGet("test")]
-        public IActionResult TestServer()
-        {
-            return Ok("It Works!");
         }
 
         [HttpGet("robots.txt")]
