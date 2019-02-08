@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
 namespace DeployManager.Controllers
@@ -12,10 +13,17 @@ namespace DeployManager.Controllers
     [ApiController]
     public class BuildController : ControllerBase
     {
+        private readonly IConfiguration Configuration;
+
+        public BuildController(IConfiguration configuration)
+        {
+            this.Configuration = configuration;
+        }
+
         [HttpGet("test")]
         public ActionResult Test()
         {
-            return Ok("Message From " + HttpContext.Request.Host.Host);
+            return Ok("It Works!");
         }
 
         [HttpPost]
@@ -23,8 +31,6 @@ namespace DeployManager.Controllers
         {
             try
             {
-                Console.WriteLine("Message From " + HttpContext.Request.Host.Host);
-
                 // Process only valid requests
                 if (!HttpContext.Request.Headers.Keys.Contains("X-GitHub-Event"))
                 {
@@ -48,7 +54,7 @@ namespace DeployManager.Controllers
                         return StatusCode(StatusCodes.Status501NotImplemented);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
@@ -57,7 +63,7 @@ namespace DeployManager.Controllers
         // Ping to check if configured properly        
         public ActionResult OnPingHandler(PingPayload payload)
         {
-            if(payload == null)
+            if (payload == null)
             {
                 Console.WriteLine(DateTime.Today.ToString("MM/dd/yy H:mm:ss zzz") + " : No Payload Received");
 
@@ -76,8 +82,25 @@ namespace DeployManager.Controllers
         // Handle Push Request     
         public ActionResult OnPushHandler([FromBody]PushPayload payload)
         {
-            Console.WriteLine("New Push Detected");
+            if (payload == null)
+            {
+                Console.WriteLine(DateTime.Today.ToString("MM/dd/yy H:mm:ss zzz") + " : No Payload Received");
+
+                return StatusCode(StatusCodes.Status204NoContent);
+
+            }
+
+            Console.WriteLine(DateTime.Now.ToString("MM/dd/yy H:mm:ss zzz") + " : Payload received {" + Environment.NewLine +
+                "repository.full_name" + payload.repository.full_name + Environment.NewLine +
+                "}");
+
+            int count = 0;
+            while (!String.IsNullOrEmpty(Configuration["MonitoredProjects:" + count + ":appName"]))
+            {
+                count++;
+            }
+
             return Ok();
-        }        
+        }
     }
 }
