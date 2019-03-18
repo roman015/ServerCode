@@ -28,6 +28,12 @@ namespace ProxyLayer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => options.AddPolicy("ProxyLayerPolicy", builder => {
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
+                builder.AllowAnyOrigin();
+            }));
+
             services.AddMvc(options =>
             {
                 options.OutputFormatters.Add(new OctetOutputFormatter());
@@ -49,6 +55,10 @@ namespace ProxyLayer
                 // Redirect to Https
                 app.UseHttpsRedirection();
             }
+
+            // Setup CORS
+            // TODO : Limit this 
+            app.UseCors("ProxyLayerPolicy");
 
             // Add Console Logging
             app.UseRequestLogger();
