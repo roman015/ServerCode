@@ -1,0 +1,25 @@
+<log4net>    
+    <appender name="FileAppender" type="log4net.Appender.FileAppender">
+        <file value="log-file.txt" />
+        <appendToFile value="true" />
+        <layout type="log4net.Layout.PatternLayout">
+            <conversionPattern value="%date [%level] %logger - %message%newline" />
+        </layout>
+    </appender>
+
+    <appender name="ConsoleGuiAppender" type="ProxyLayer.ConsoleGuiAppender,ProxyLayer">
+        <layout type="log4net.Layout.PatternLayout">
+            <conversionPattern value="%date [%level] %logger - %message%newline" />
+        </layout>
+    </appender>
+    
+    <root>
+        <level value="ALL" />
+        <appender-ref ref="ConsoleGuiAppender" />
+    </root>
+
+    <!-- Sample To Control Logs of a particular type -->
+    <logger name="Com.Foo">
+        <level value="WARN" />
+    </logger>
+</log4net>

@@ -1,0 +1,85 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\xavie\\Source\\ServerCode\\ProxyLayer\\ProxyLayer.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\xavie\\Source\\ServerCode\\ProxyLayer\\ProxyLayer.csproj": {
+      "version": "2.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\xavie\\Source\\ServerCode\\ProxyLayer\\ProxyLayer.csproj",
+        "projectName": "ProxyLayer",
+        "projectPath": "C:\\Users\\xavie\\Source\\ServerCode\\ProxyLayer\\ProxyLayer.csproj",
+        "packagesPath": "C:\\Users\\xavie\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\xavie\\Source\\ServerCode\\ProxyLayer\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\xavie\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "McMaster.Extensions.CommandLineUtils": {
+              "target": "Package",
+              "version": "[2.4.2, )"
+            },
+            "Microsoft.AspNetCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "Microsoft.AspNetCore.Proxy": {
+              "target": "Package",
+              "version": "[0.2.0, )"
+            },
+            "Microsoft.AspNetCore.Razor.Design": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "Terminal.Gui": {
+              "target": "Package",
+              "version": "[0.24.0, )"
+            },
+            "log4net": {
+              "target": "Package",
+              "version": "[2.0.8, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

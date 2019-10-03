@@ -1,0 +1,16 @@
+C:\Users\xavie\Source\ServerCode\ProxyLayer\bin\Debug\netcoreapp2.2\log4net.config.xml
+C:\Users\xavie\Source\ServerCode\ProxyLayer\bin\Debug\netcoreapp2.2\Server.config.json
+C:\Users\xavie\Source\ServerCode\ProxyLayer\bin\Debug\netcoreapp2.2\ProxyLayer.deps.json
+C:\Users\xavie\Source\ServerCode\ProxyLayer\bin\Debug\netcoreapp2.2\ProxyLayer.runtimeconfig.json
+C:\Users\xavie\Source\ServerCode\ProxyLayer\bin\Debug\netcoreapp2.2\ProxyLayer.runtimeconfig.dev.json
+C:\Users\xavie\Source\ServerCode\ProxyLayer\bin\Debug\netcoreapp2.2\ProxyLayer.dll
+C:\Users\xavie\Source\ServerCode\ProxyLayer\bin\Debug\netcoreapp2.2\ProxyLayer.pdb
+C:\Users\xavie\Source\ServerCode\ProxyLayer\obj\Debug\netcoreapp2.2\ProxyLayer.csprojAssemblyReference.cache
+C:\Users\xavie\Source\ServerCode\ProxyLayer\obj\Debug\netcoreapp2.2\ProxyLayer.csproj.CoreCompileInputs.cache
+C:\Users\xavie\Source\ServerCode\ProxyLayer\obj\Debug\netcoreapp2.2\ProxyLayer.RazorAssemblyInfo.cache
+C:\Users\xavie\Source\ServerCode\ProxyLayer\obj\Debug\netcoreapp2.2\ProxyLayer.RazorAssemblyInfo.cs
+C:\Users\xavie\Source\ServerCode\ProxyLayer\obj\Debug\netcoreapp2.2\ProxyLayer.AssemblyInfoInputs.cache
+C:\Users\xavie\Source\ServerCode\ProxyLayer\obj\Debug\netcoreapp2.2\ProxyLayer.AssemblyInfo.cs
+C:\Users\xavie\Source\ServerCode\ProxyLayer\obj\Debug\netcoreapp2.2\ProxyLayer.RazorTargetAssemblyInfo.cache
+C:\Users\xavie\Source\ServerCode\ProxyLayer\obj\Debug\netcoreapp2.2\ProxyLayer.dll
+C:\Users\xavie\Source\ServerCode\ProxyLayer\obj\Debug\netcoreapp2.2\ProxyLayer.pdb
