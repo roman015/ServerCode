@@ -3,7 +3,7 @@ ProxyLayer 2.0
 
 DEPLOY
 ------
-./Reload_Project.sh "ProxyLayer" "--c ~/data/ProxyServer.Config.json" "git@github.com:roman015/ServerCode.git"
+./Reload_Project.sh "ProxyLayer" "-c ~/data/ProxyServer.Config.json" "git@github.com:roman015/ServerCode.git"
 
 USAGE
 -----
