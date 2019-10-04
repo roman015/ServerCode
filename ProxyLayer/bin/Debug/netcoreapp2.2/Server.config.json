@@ -26,8 +26,8 @@
     }
   ],
   "RequestFilter": {
-    "BypassRequestFilter": "true",
-    "AllowEmptyUserAgent": "true",
+    "BypassRequestFilter": "false",
+    "AllowEmptyUserAgent": "false",
     "UserAgents": {
       "Allowed": [
         "Firefox",
