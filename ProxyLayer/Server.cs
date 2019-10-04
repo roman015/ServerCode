@@ -17,6 +17,7 @@ using Microsoft.Extensions.Options;
 using log4net;
 using log4net.Config;
 using System.Threading;
+using ProxyLayer.Middlewares;
 
 
 namespace ProxyLayer
@@ -131,11 +132,15 @@ namespace ProxyLayer
             }));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSingleton<IConfiguration>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddLog4Net();
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -154,6 +159,9 @@ namespace ProxyLayer
             // Setup CORS
             // TODO : Limit this 
             app.UseCors("ProxyLayerPolicy");
+
+            // Add Request Filter
+            app.UseRequestFilter(Configuration);
 
             // Configure all mappings from appsettings.json
             int count = 0;

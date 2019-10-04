@@ -1,20 +1,36 @@
 {
-    "ServerPort": 8080,
-    "SSL" : {
-        "Port":-1,
-        "CertPath":"",
-        "CertPassword":""
+  "ServerPort": 8080,
+  "SSL": {
+    "Port": -1,
+    "CertPath": "",
+    "CertPassword": ""
+  },
+  "Mappings": [
+    {
+      "Pattern": "/Authenticate/",
+      "Host": "localhost",
+      "Port": "6000"
     },
-    "Mappings": [        
-        {
-          "Pattern": "/Authenticate/",
-          "Host":"localhost",
-          "Port": "6000"
-        },
-        {
-          "Pattern": "/Factorio/",
-          "Host":"localhost",
-          "Port": "6001"
-        }
+    {
+      "Pattern": "/Factorio/",
+      "Host": "localhost",
+      "Port": "6001"
+    }
+  ],
+  "RequestFilter": {
+    "BypassRequestFilter": "false",
+    "AllowEmptyUserAgent": "false",
+    "UserAgents": {
+      "Allowed": [
+        "Firefox",
+        "Chrome",
+        "Edge",
+        "Microsoft",
+        "PostmanRuntime"
+      ],
+      "Blocked": [
+        "Googlebot"
       ]
+    }
+  }
 }

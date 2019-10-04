@@ -124,7 +124,7 @@ namespace ProxyLayer
     // Class used to append logs to ConsoleGui
     public class ConsoleGuiAppender : AppenderSkeleton
     {
-        private static readonly int MAXGUILOGLENGTH = 1000;
+        private static readonly int MAXGUILOGLENGTH = 6000;
         static StringBuilder logStringBuilder = new StringBuilder();
 
         protected override void Append(LoggingEvent loggingEvent)
