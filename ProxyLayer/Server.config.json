@@ -7,14 +7,22 @@
   },
   "Mappings": [
     {
-      "Pattern": "/Authenticate/",
+      "HostPattern": "api.roman015.com",
+      "PathPattern": "/Authenticate/",
       "Host": "localhost",
       "Port": "6000"
     },
     {
-      "Pattern": "/Factorio/",
+      "HostPattern": "api.roman015.com",
+      "PathPattern": "/Factorio/",
       "Host": "localhost",
       "Port": "6001"
+    },
+    {
+      "HostPattern": "www.roman015.com",
+      "PathPattern": "",
+      "Host": "localhost",
+      "Port": "6002"
     }
   ],
   "RequestFilter": {
