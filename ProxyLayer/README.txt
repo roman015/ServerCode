@@ -1,6 +1,10 @@
 ProxyLayer 2.0
 ---------------
 
+DEPLOY
+------
+./Reload_Project.sh "ProxyLayer" "--c ~/data/ProxyServer.Config.json" "git@github.com:roman015/ServerCode.git"
+
 USAGE
 -----
 dotnet run -- -c <PATH TO Server.config.json FILE>

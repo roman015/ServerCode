@@ -50,16 +50,17 @@ namespace ProxyLayer
 
             webHost = webHostBuilder.Build();
             log.Info("Starting WebHost");
-            ServerThread = ServerThread ?? new Thread(() =>{
-                 webHost.Run();
-             });
+            ServerThread = ServerThread ?? new Thread(() =>
+            {
+                webHost.Run();
+            });
 
             if (ServerThread.ThreadState != ThreadState.Running)
-            {                
+            {
                 ServerThread.Start();
                 log.Info("WebHost Ready");
             }
-            
+
         }
 
         public void Stop()
@@ -140,7 +141,7 @@ namespace ProxyLayer
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddLog4Net();
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -165,21 +166,22 @@ namespace ProxyLayer
 
             // Configure all mappings from appsettings.json
             int count = 0;
-            while (!String.IsNullOrEmpty(Configuration["Mappings:" + count + ":Pattern"]))
+            while (!String.IsNullOrEmpty(Configuration["Mappings:" + count + ":PathPattern"]))
             {
                 // Read Mapping values
-                string pattern = Configuration["Mappings:" + count + ":Pattern"];
+                string hostPattern = Configuration["Mappings:" + count + ":HostPattern"];
+                string pathPattern = Configuration["Mappings:" + count + ":PathPattern"];
                 string host = Configuration["Mappings:" + count + ":Host"];
                 int port = Convert.ToInt32(Configuration["Mappings:" + count + ":Port"]);
 
                 // Create Mapping
-                Mapping mapping = new Mapping(pattern, host, port);
+                Mapping mapping = new Mapping(hostPattern, pathPattern, host, port);
 
                 // Configure Mapping
                 app.MapWhen(mapping.IsConfiguredPath, builder => builder.RunProxy(mapping.ProxyOptions));
 
                 // For Console Logging
-                log.Info("Mapped " + pattern + " to " + host + ":" + port);
+                log.Info("Mapped {" + hostPattern + "," + pathPattern + "} to " + host + ":" + port);
 
                 // Goto Next Mapping
                 count++;
@@ -192,13 +194,15 @@ namespace ProxyLayer
     public class Mapping
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(Mapping));
-        public string Pattern { get; set; }
+        public string HostPattern { get; set; }
+        public string PathPattern { get; set; }
         public int Port { get; set; }
         public string Host { get; set; }
 
-        public Mapping(string pattern, string host, int port)
+        public Mapping(string hostPattern, string pathPattern, string host, int port)
         {
-            Pattern = pattern;
+            HostPattern = hostPattern;
+            PathPattern = pathPattern;
             Host = host;
             Port = port;
         }
@@ -216,16 +220,13 @@ namespace ProxyLayer
             {
                 return delegate (HttpContext httpContext)
                 {
-                    if (Pattern.StartsWith("/"))
-                    {
-                        return httpContext.Request.Path.Value
-                            .StartsWith(Pattern, StringComparison.OrdinalIgnoreCase);
-                    }
-                    else
-                    {
-                        return httpContext.Request.Host.Value
-                            .StartsWith(Pattern, StringComparison.OrdinalIgnoreCase);
-                    }
+                    return (
+                        httpContext.Request.Host.Value
+                            .StartsWith(HostPattern, StringComparison.OrdinalIgnoreCase)
+                        &&
+                        httpContext.Request.Path.Value
+                            .StartsWith(PathPattern, StringComparison.OrdinalIgnoreCase)
+                            );
                 };
             }
         }
